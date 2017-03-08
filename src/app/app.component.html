@@ -1,3 +1,30 @@
 <h1>
-  {{title}}
+  {{title}} <small>bentornato, {{user}}</small>
 </h1>
+<div *ngIf="selectedInvoice">
+  <h2>
+    Fattura {{selectedInvoice.fiscal_year}}-{{selectedInvoice.fiscal_no}}: {{selectedInvoice.amount}}
+  </h2>
+</div>
+
+  <ul class="invoices">
+    <li *ngFor="let invoice of invoices" 
+      [class.selected]="invoice === selectedInvoice"
+      (click)="onSelect(invoice)">
+      <span class="badge">{{invoice.fiscal_year}}-{{invoice.fiscal_no}}</span>
+      {{invoice.amount}}
+  </ul>
+    
+<div *ngIf="selectedInvoice">
+
+  <ul>
+    <li *ngFor="let invoiceline of selectedInvoice.invoiceLine">
+      <input [(ngModel)]='invoiceline.description' 
+      placeholder="description">
+  </ul>
+
+  <div>
+    <label>Importo: </label>
+    <input [(ngModel)]='selectedInvoice.amount' placeholder="amount">
+  </div>
+</div>
